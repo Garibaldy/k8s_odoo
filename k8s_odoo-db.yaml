@@ -1,19 +1,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: rsvp-db
+  name: odoo-db
 spec: 
   replicas: 1
   template:
     metadata:
       labels:
-        appdb: rsvpdb
+        appdb: odoodb
     spec: 
       containers:
-      - name: rsvpd-db
-        image: mvertes/alpine-mongo 
+      - name: odoo-dbdb
+        image: postgres:9.6-alpine 
         env:
-        - name: MONGODB_DATABASE
-          value: rsvpdata
+        - name: odoo_database
+          value: odoodata
         ports:
         - containerPort: 27017
