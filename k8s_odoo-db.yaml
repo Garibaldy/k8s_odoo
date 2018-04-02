@@ -3,33 +3,25 @@ kind: Deployment
 metadata:
   name: odoo-db
   namespace: odoo
-  labels:
-    app: odoo-shop
+
 spec: 
   replicas: 1
   template:
     metadata:
       labels:
-        appdb: odoodb
+        appdb: odoo-db
     spec: 
       containers:
       - image: postgres:9.6-alpine
-        name: odoo-db
+        name: odoo-db 
         env:
         - name: POSTGRES_USER
           value: odoo
         - name: POSTGRES_PASSWORD
-          value: password
+          value: odoodbpassword
         - name: PGDATA
           value: /var/lib/postgresql/data/pgdata
         ports:
         - containerPort: 5432
           name: odoo-db
-        volumeMounts:
-        - name: odoo-db-pvc
-          mountPath: /var/lib/postgresql/data
-      volumes:
-      - name: odoo-db-pvc
-        persistentVolumeClaim:
-          claimName: odoo-db-pvc
         

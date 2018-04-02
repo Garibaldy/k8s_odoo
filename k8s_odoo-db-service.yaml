@@ -8,10 +8,7 @@ metadata:
 spec:
   ports:
   - port: 5432
-  - tier: backend
-  
+    targetPort: odoo-db
   selector:
-    app:odoo-shop
-    ##type: NodePort
-
-  
+    app: odoo-shop
+    

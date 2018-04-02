@@ -12,5 +12,5 @@ spec:
     targetPort: odoo
   selector:
     app: odoo-shop
-    tier: frontend
+ 
     
