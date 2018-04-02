@@ -2,6 +2,9 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: odoo-db
+  namespace: odoo
+  labels:
+    app: odoo-shop
 spec: 
   replicas: 1
   template:
@@ -10,10 +13,23 @@ spec:
         appdb: odoodb
     spec: 
       containers:
-      - name: odoo-dbdb
-        image: postgres:9.6-alpine 
+      - image: postgres:9.6-alpine
+        name: odoo-db
         env:
-        - name: odoo_database
-          value: odoodata
+        - name: POSTGRES_USER
+          value: odoo
+        - name: POSTGRES_PASSWORD
+          value: password
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
         ports:
-        - containerPort: 27017
+        - containerPort: 5432
+          name: odoo-db
+        volumeMounts:
+        - name: odoo-db-pvc
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: odoo-db-pvc
+        persistentVolumeClaim:
+          claimName: odoo-db-pvc
+        

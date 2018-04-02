@@ -1,20 +1,42 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: rsvp
+  name: odoo-shop
+  namespace: odoo
+  labels:
+    app: odoo-shop
 spec: 
   replicas: 1
   template:
     metadata:
       labels:
-        app: rsvp
+        app: odoo-shop
+        tier: frontend
     spec:
       containers:
-      - name: rsvp-app
-        image: teamcloudyuga/rsvpapp
-        env:
-        - name: MONGODB_HOST
-          value: mongodb
-        ports:
-        - containerPort: 5000
-          name: web-port
+        - image: odoo:latest
+          name: odoo
+          env:
+          - name: HOST
+            value: odoo-db
+          - name: USER
+            value: odoo
+          - name: PASSWORD
+            value: password
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          ports:
+            - containerPort: 8069
+              name: odoo
+              
+          volumeMounts:
+          - name: odoo-pvc
+            mountPath: /var/lib/odoo
+      volumes:
+      - name: odoo-pvc
+        persistentVolumeClaim:
+          claimName: odoo-pvc
+
+          
+ 
