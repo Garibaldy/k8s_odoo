@@ -9,7 +9,7 @@ metadata:
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-db
+  name: odoo-db-svc
   namespace: odoo
 spec:
   ports:
@@ -47,7 +47,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: odoo-shop
+  name: odoo-shop-svc
   namespace: odoo
 spec:
   type: NodePort
@@ -75,7 +75,7 @@ spec:
         image: odoo:latest
         env:
         - name: HOST
-          value: odoo-db
+          value: odoo-db-svc
         - name: USER
           value: odoo
         - name: PASSWORD
@@ -86,6 +86,7 @@ spec:
         ports:
           - containerPort: 8069
             name: web-port
+         
 
 
             

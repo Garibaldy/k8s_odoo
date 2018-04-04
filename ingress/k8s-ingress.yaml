@@ -1,0 +1,21 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: http2-qn-ingress
+  #namespace: odoo
+spec:
+  rules:
+  - host: v10.qn.com
+    http:
+      paths:
+      - backend: 
+          serviceName: odoo-shop-svc
+          servicePort: web-port
+  - host: v11.qn.com
+    http:
+      paths:
+      - backend:
+          serviceName: odoo-shop-svc
+          servicePort: web-port
+---   
